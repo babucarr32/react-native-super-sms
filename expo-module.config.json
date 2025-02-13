@@ -1,0 +1,17 @@
+{
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "ReactNativeSuperSmsModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.reactnativesupersms.ReactNativeSuperSmsModule"
+    ]
+  }
+}

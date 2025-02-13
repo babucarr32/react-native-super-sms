@@ -1,0 +1,43 @@
+{
+  "name": "react-native-super-sms",
+  "version": "0.1.0",
+  "description": "The ultimate sms API for react native",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "react-native-super-sms",
+    "ReactNativeSuperSms"
+  ],
+  "repository": "https://github.com/babucarr32/react-native-super-sms",
+  "bugs": {
+    "url": "https://github.com/babucarr32/react-native-super-sms/issues"
+  },
+  "author": "babucarr32 <bbabucarr32@gmail.com> (https://github.com/babucarr32)",
+  "license": "MIT",
+  "homepage": "https://github.com/babucarr32/react-native-super-sms#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "~18.3.12",
+    "expo-module-scripts": "^4.0.3",
+    "expo": "~52.0.0",
+    "react-native": "0.76.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
