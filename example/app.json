@@ -21,6 +21,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "permissions": [
+        "android.permission.SEND_SMS",
+        "android.permission.READ_PHONE_STATE"
+      ],
       "package": "expo.modules.reactnativesupersms.example"
     },
     "web": {

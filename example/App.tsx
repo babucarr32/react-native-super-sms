@@ -1,73 +1,67 @@
-import { useEvent } from 'expo';
-import ReactNativeSuperSms, { ReactNativeSuperSmsView } from 'react-native-super-sms';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Button, PermissionsAndroid, SafeAreaView } from "react-native";
+import ReactNativeSuperSms from "react-native-super-sms";
 
 export default function App() {
-  const onChangePayload = useEvent(ReactNativeSuperSms, 'onChange');
+  async function requestSmsPermission() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.SEND_SMS,
+      {
+        title: "Send SMS Permission",
+        message: "This app needs access to send SMS messages.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK",
+      },
+    );
+
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  }
+  async function requestReadPrivilege() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+      {
+        title: "Read phone state",
+        message: "This app needs access phone state(sim state).",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK",
+      },
+    );
+
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  }
+
+  const sendSms = async () => {
+    console.log("Requesting...")
+    const isPreviledgeResult = await requestReadPrivilege();
+    const canSendSMS = await requestSmsPermission();
+    console.log({isPreviledgeResult, canSendSMS})
+
+    if (isPreviledgeResult && canSendSMS) {
+      const PHONE_NUMBER = "+2203626260";
+      const MESSAGE = "Hello world";
+      const SIM_SLOT = 1;
+
+      ReactNativeSuperSms.sendSMS(PHONE_NUMBER, MESSAGE, SIM_SLOT)
+        .then((result) => {
+          console.log({ result });
+        })
+        .catch((err) => {
+          console.log({ err });
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ReactNativeSuperSms.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ReactNativeSuperSms.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ReactNativeSuperSms.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ReactNativeSuperSmsView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
-        </Group>
-      </ScrollView>
+      <Button title="Send sms" onPress={sendSms} />
     </SafeAreaView>
   );
 }
 
-function Group(props: { name: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
-    </View>
-  );
-}
-
 const styles = {
-  header: {
-    fontSize: 30,
-    margin: 20,
-  },
-  groupHeader: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  group: {
-    margin: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-  },
   container: {
     flex: 1,
-    backgroundColor: '#eee',
-  },
-  view: {
-    flex: 1,
-    height: 200,
+    backgroundColor: "#eee",
   },
 };
