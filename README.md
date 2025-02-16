@@ -1,4 +1,4 @@
-# react-native-super-sms
+# React Native Super SMS
 
 The ultimate SMS API for your react native project.
 
